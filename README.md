@@ -1,27 +1,48 @@
-Step 1: Remove the old (broken) key and source list:
+Method: Install Jenkins Directly (No Key Needed)
+
+Step 1: First, clean up the broken repository entries:
 
 bash
-sudo rm -f /usr/share/keyrings/jenkins-keyring.asc
 sudo rm -f /etc/apt/sources.list.d/jenkins.list
-
-Step 2: Download the key properly using curl instead of wget:
-
-bash
-curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
-
-Step 3: Add the Jenkins source again:
-
-bash
-echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
-
-Step 4: Now update and install:
-
-bash
+sudo apt-key del "$(sudo apt-key list 2>/dev/null | grep -B1 jenkins | head -1 | awk '{print $NF}')" 2>/dev/null
 sudo apt update
-sudo apt install jenkins -y
-another approach 
 
-wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo apt-key add -
-echo "deb https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
-sudo apt update
-sudo apt install jenkins -y
+(Don't worry if the second command shows an error — that's fine.)
+
+Step 2: Make sure Java is installed:
+
+bash
+java -version
+
+If it's not installed:
+
+bash
+sudo apt install openjdk-17-jdk -y
+
+Step 3: Download the Jenkins WAR file:
+
+bash
+wget https://get.jenkins.io/war-stable/latest/jenkins.war
+
+This downloads Jenkins as a single file — no repository or key needed.
+
+Step 4: Run Jenkins:
+
+bash
+java -jar jenkins.war
+
+What you should see: A lot of text scrolling, and near the end:
+
+*************************************************************
+Jenkins initial setup is required. An admin user has been created and a password generated.
+Please use the following password to proceed to installation:
+a1b2c3d4e5f6789...
+This may also be found at: /home/labuser/.jenkins/secrets/initialAdminPassword
+*************************************************************
+Jenkins is fully up and running
+
+Step 5: Open your browser and go to:
+
+http://localhost:8080
+
+You should see the "Unlock Jenkins" page. Paste the password from the terminal output.
