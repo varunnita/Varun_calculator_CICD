@@ -46,3 +46,42 @@ Step 5: Open your browser and go to:
 http://localhost:8080
 
 You should see the "Unlock Jenkins" page. Paste the password from the terminal output.
+
+
+
+
+
+sudo apt install openjdk-21-jdk -y
+
+  
+
+If that doesn't find the package (Ubuntu 20.04 may not have Java 21 in its default repos), run this instead:
+
+
+  
+bash
+sudo add-apt-repository ppa:openjdk-r/ppa -y
+sudo apt update
+sudo apt install openjdk-21-jdk -y
+
+  
+Step 2: Verify
+
+  
+bash
+java -version
+
+  
+
+You should see something like:
+
+
+  
+openjdk version "21.0.x"
+
+  
+Step 3: Now run Jenkins
+
+  
+bash
+java -jar jenkins.war
