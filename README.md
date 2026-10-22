@@ -19,7 +19,8 @@ Step 4: Now update and install:
 bash
 sudo apt update
 sudo apt install jenkins -y
-=========================================
+another approach 
+
 wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo apt-key add -
 echo "deb https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
 sudo apt update
