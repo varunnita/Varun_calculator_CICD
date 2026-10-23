@@ -1,82 +1,64 @@
-# calculator.py
-# A simple calculator that performs basic arithmetic operations.
+# test_calculator.py
+# Automated tests for the calculator functions.
+# These tests run automatically to verify our calculator works correctly.
 
-# ----- CALCULATOR FUNCTIONS -----
-
-def add(a, b):
-    """Return the sum of a and b."""
-    return a + b
+import unittest
+from calculator import add, subtract, multiply, divide
 
 
-def subtract(a, b):
-    """Return the difference of a and b."""
-    return a - b
+class TestCalculator(unittest.TestCase):
+    """A collection of tests for each calculator function."""
+
+    # ----- ADDITION TESTS -----
+
+    def test_add_positive_numbers(self):
+        """Test adding two positive numbers."""
+        self.assertEqual(add(2, 3), 5)
+
+    def test_add_negative_numbers(self):
+        """Test adding two negative numbers."""
+        self.assertEqual(add(-1, -1), -2)
+
+    def test_add_zero(self):
+        """Test adding zero to a number."""
+        self.assertEqual(add(5, 0), 5)
+
+    # ----- SUBTRACTION TESTS -----
+
+    def test_subtract_positive_numbers(self):
+        """Test subtracting two positive numbers."""
+        self.assertEqual(subtract(10, 4), 6)
+
+    def test_subtract_negative_result(self):
+        """Test subtraction that results in a negative number."""
+        self.assertEqual(subtract(3, 7), -4)
+
+    # ----- MULTIPLICATION TESTS -----
+
+    def test_multiply_positive_numbers(self):
+        """Test multiplying two positive numbers."""
+        self.assertEqual(multiply(3, 4), 12)
+
+    def test_multiply_by_zero(self):
+        """Test multiplying by zero (result should always be 0)."""
+        self.assertEqual(multiply(100, 0), 0)
+
+    # ----- DIVISION TESTS -----
+
+    def test_divide_positive_numbers(self):
+        """Test dividing two positive numbers."""
+        self.assertEqual(divide(10, 2), 5)
+
+    def test_divide_returns_float(self):
+        """Test that division returns a decimal result when needed."""
+        self.assertEqual(divide(7, 2), 3.5)
+
+    def test_divide_by_zero(self):
+        """Test that dividing by zero raises a ValueError."""
+        with self.assertRaises(ValueError):
+            divide(10, 0)
 
 
-def multiply(a, b):
-    """Return the product of a and b."""
-    return a * b
-
-
-def divide(a, b):
-    """Return the result of a divided by b.
-    Raises a ValueError if b is zero (division by zero is undefined).
-    """
-    if b == 0:
-        raise ValueError("Cannot divide by zero!")
-    return a / b
-
-
-# ----- MAIN PROGRAM (runs when you execute this file directly) -----
-
-def main():
-    """Display a menu, take user input, and perform the chosen operation."""
-    print("===========================")
-    print("   SIMPLE CALCULATOR")
-    print("===========================")
-    print("1. Addition")
-    print("2. Subtraction")
-    print("3. Multiplication")
-    print("4. Division")
-    print("===========================")
-
-    choice = input("Enter your choice (1/2/3/4): ")
-
-    # Validate the menu choice
-    if choice not in ("1", "2", "3", "4"):
-        print("Error: Invalid choice. Please enter 1, 2, 3, or 4.")
-        return  # exit the function early
-
-    # Get numbers from the user
-    try:
-        num1 = float(input("Enter first number: "))
-        num2 = float(input("Enter second number: "))
-    except ValueError:
-        print("Error: Please enter valid numbers.")
-        return
-
-    # Perform the chosen operation
-    if choice == "1":
-        result = add(num1, num2)
-        operation = "+"
-    elif choice == "2":
-        result = subtract(num1, num2)
-        operation = "-"
-    elif choice == "3":
-        result = multiply(num1, num2)
-        operation = "*"
-    elif choice == "4":
-        try:
-            result = divide(num1, num2)
-        except ValueError as e:
-            print(f"Error: {e}")
-            return
-        operation = "/"
-
-    print(f"\nResult: {num1} {operation} {num2} = {result}")
-
-
-# This block runs only when you execute 'python calculator.py' directly.
-# It does NOT run when another file imports this file.
+# This allows running the tests by executing: python test_calculator.py
 if __name__ == "__main__":
-    main()
+    unittest.main()
