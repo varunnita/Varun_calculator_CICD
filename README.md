@@ -1,2 +1,3 @@
-git config --global user.name "Your Name"
+[[[git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
+](http://localhost:8080/view/all/newJob?name=Calculator-Pipeline&mode=org.jenkinsci.plugins.workflow.job.WorkflowJob)](http://localhost:8080/view/all/newJob?name=Calculator-Pipeline&mode=org.jenkinsci.plugins.workflow.job.WorkflowJob)](http://localhost:8080/view/all/newJob?name=Calculator-Pipeline&mode=org.jenkinsci.plugins.workflow.job.WorkflowJob)http://localhost:8080/view/all/newJob?name=Calculator-Pipeline&mode=org.jenkinsci.plugins.workflow.job.WorkflowJobhttp://localhost:8080/view/all/newJob?name=Calculator-Pipeline&mode=org.jenkinsci.plugins.workflow.job.WorkflowJob
