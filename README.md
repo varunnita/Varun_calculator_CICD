@@ -1,87 +1,82 @@
-Method: Install Jenkins Directly (No Key Needed)
+# calculator.py
+# A simple calculator that performs basic arithmetic operations.
 
-Step 1: First, clean up the broken repository entries:
+# ----- CALCULATOR FUNCTIONS -----
 
-bash
-sudo rm -f /etc/apt/sources.list.d/jenkins.list
-sudo apt-key del "$(sudo apt-key list 2>/dev/null | grep -B1 jenkins | head -1 | awk '{print $NF}')" 2>/dev/null
-sudo apt update
-
-(Don't worry if the second command shows an error — that's fine.)
-
-Step 2: Make sure Java is installed:
-
-bash
-java -version
-
-If it's not installed:
-
-bash
-sudo apt install openjdk-17-jdk -y
-
-Step 3: Download the Jenkins WAR file:
-
-bash
-wget https://get.jenkins.io/war-stable/latest/jenkins.war
-
-This downloads Jenkins as a single file — no repository or key needed.
-
-Step 4: Run Jenkins:
-
-bash
-java -jar jenkins.war
-
-What you should see: A lot of text scrolling, and near the end:
-
-*************************************************************
-Jenkins initial setup is required. An admin user has been created and a password generated.
-Please use the following password to proceed to installation:
-a1b2c3d4e5f6789...
-This may also be found at: /home/labuser/.jenkins/secrets/initialAdminPassword
-*************************************************************
-Jenkins is fully up and running
-
-Step 5: Open your browser and go to:
-
-http://localhost:8080
-
-You should see the "Unlock Jenkins" page. Paste the password from the terminal output.
+def add(a, b):
+    """Return the sum of a and b."""
+    return a + b
 
 
+def subtract(a, b):
+    """Return the difference of a and b."""
+    return a - b
 
 
-
-sudo apt install openjdk-21-jdk -y
-
-  
-
-If that doesn't find the package (Ubuntu 20.04 may not have Java 21 in its default repos), run this instead:
+def multiply(a, b):
+    """Return the product of a and b."""
+    return a * b
 
 
-  
-bash
-sudo add-apt-repository ppa:openjdk-r/ppa -y
-sudo apt update
-sudo apt install openjdk-21-jdk -y
-
-  
-Step 2: Verify
-
-  
-bash
-java -version
-
-  
-
-You should see something like:
+def divide(a, b):
+    """Return the result of a divided by b.
+    Raises a ValueError if b is zero (division by zero is undefined).
+    """
+    if b == 0:
+        raise ValueError("Cannot divide by zero!")
+    return a / b
 
 
-  
-openjdk version "21.0.x"
+# ----- MAIN PROGRAM (runs when you execute this file directly) -----
 
-  
-Step 3: Now run Jenkins
+def main():
+    """Display a menu, take user input, and perform the chosen operation."""
+    print("===========================")
+    print("   SIMPLE CALCULATOR")
+    print("===========================")
+    print("1. Addition")
+    print("2. Subtraction")
+    print("3. Multiplication")
+    print("4. Division")
+    print("===========================")
 
-  
-bash
-java -jar jenkins.war
+    choice = input("Enter your choice (1/2/3/4): ")
+
+    # Validate the menu choice
+    if choice not in ("1", "2", "3", "4"):
+        print("Error: Invalid choice. Please enter 1, 2, 3, or 4.")
+        return  # exit the function early
+
+    # Get numbers from the user
+    try:
+        num1 = float(input("Enter first number: "))
+        num2 = float(input("Enter second number: "))
+    except ValueError:
+        print("Error: Please enter valid numbers.")
+        return
+
+    # Perform the chosen operation
+    if choice == "1":
+        result = add(num1, num2)
+        operation = "+"
+    elif choice == "2":
+        result = subtract(num1, num2)
+        operation = "-"
+    elif choice == "3":
+        result = multiply(num1, num2)
+        operation = "*"
+    elif choice == "4":
+        try:
+            result = divide(num1, num2)
+        except ValueError as e:
+            print(f"Error: {e}")
+            return
+        operation = "/"
+
+    print(f"\nResult: {num1} {operation} {num2} = {result}")
+
+
+# This block runs only when you execute 'python calculator.py' directly.
+# It does NOT run when another file imports this file.
+if __name__ == "__main__":
+    main()
